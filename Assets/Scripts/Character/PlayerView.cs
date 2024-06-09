@@ -10,6 +10,7 @@ public class PlayerView : MonoBehaviour
 {
     [SerializeField] private Transform _gunHandle;
     [SerializeField] private TrailRenderer _trailRenderer;
+    [SerializeField] private ParticleSystem _particleSystem;
     private Transform _gunCanonTransform;
     private ThirdPersonShooterController _shooterController;
     private Animator _animator;
@@ -24,14 +25,16 @@ public class PlayerView : MonoBehaviour
 
     private void OnEnable()
     {
-        _shooterController.OnAim += ChangeAnimations;
+        _shooterController.OnAim += AimAnimation;
         _gunController.OnGunShoot += RenderBullet;
+        _gunController.OnReload += ReloadAnimation;
     }
 
     private void OnDisable()
     {
-        _shooterController.OnAim -= ChangeAnimations;
+        _shooterController.OnAim -= AimAnimation;
         _gunController.OnGunShoot -= RenderBullet;
+        _gunController.OnReload -= ReloadAnimation;
     }
 
     private void Start()
@@ -69,7 +72,7 @@ public class PlayerView : MonoBehaviour
         Destroy(trail.gameObject, trail.time);
     }
 
-    private void ChangeAnimations(bool aimState)
+    private void AimAnimation(bool aimState)
     {
         if (aimState)
         {
@@ -81,4 +84,6 @@ public class PlayerView : MonoBehaviour
             
         }
     }
+
+    private void ReloadAnimation() => _animator.SetTrigger("Reload");
 }

@@ -13,7 +13,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     private GunController _gunController;
     private Coroutine _currentCoroutine;
 
-    public event Action<bool> OnAim = delegate { };   
+    public event Action<bool> OnAim = delegate { };
 
     private void Awake()
     {
@@ -25,6 +25,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     {
         Aim();
         HandleShootInput();
+        Reload();
     }
 
     private void HandleShootInput()
@@ -65,6 +66,14 @@ public class ThirdPersonShooterController : MonoBehaviour
         {
             OnAim?.Invoke(false);
             _aimCinemachine.SetActive(false);
+        }
+    }
+
+    private void Reload()
+    {
+        if (_input.IsReloading)
+        {
+            _gunController.Reload();
         }
     }
 }

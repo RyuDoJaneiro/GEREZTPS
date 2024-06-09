@@ -14,6 +14,7 @@ namespace StarterAssets
         [field: SerializeField] public bool IsSprinting { get; set; }
         [field: SerializeField] public bool IsAiming { get; set; }
 		[field: SerializeField] public bool IsShooting { get; set; }
+		[field: SerializeField] public bool IsReloading { get; set; }
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -55,6 +56,11 @@ namespace StarterAssets
 		{
 			ShootInput(value.isPressed);
 		}
+
+		public void OnReload(InputValue value)
+		{
+			ReloadInput(value.isPressed);
+		}
 #endif
 
 
@@ -86,6 +92,11 @@ namespace StarterAssets
 		public void ShootInput(bool newShootState)
 		{
 			IsShooting = newShootState;
+		}
+
+		public void ReloadInput(bool newReloadState)
+		{
+			IsReloading = newReloadState;
 		}
 
 		private void OnApplicationFocus(bool hasFocus)

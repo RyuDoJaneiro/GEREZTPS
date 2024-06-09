@@ -11,11 +11,13 @@ public class GunController : MonoBehaviour
     [SerializeField] private GunData _gunData;
     [SerializeField] private float _gunMaxDistance = 100f;
     [SerializeField] private int _gunAmmo;
+    private Coroutine _currentCoroutine;
 
     public GunData GunData { get => _gunData; set => _gunData = value; }
 
     public event Action<Vector3, Vector3> OnGunShoot = delegate { };
     public event Action<int> OnAmmoUpdate = delegate { };
+    public event Action OnReload = delegate { };
 
     private void Awake()
     {
@@ -51,6 +53,10 @@ public class GunController : MonoBehaviour
             {
                 Debug.Log($"{name}: Shooted to {hitInfo.collider.name}");
             }
+            else
+            {
+
+            }
             
             OnGunShoot?.Invoke(bullet.origin, hitInfo.point);
         }
@@ -58,14 +64,19 @@ public class GunController : MonoBehaviour
 
     public void Reload()
     {
+        if (_currentCoroutine != null)
+            return;
+
         Debug.Log($"{name} is reloading...");
-        StartCoroutine(ReloadSequence());
+        _currentCoroutine = StartCoroutine(ReloadSequence());
     }
 
     private IEnumerator ReloadSequence()
     {
+        OnReload?.Invoke();
         yield return new WaitForSeconds(2f);
 
         _gunAmmo = _gunData.maxAmmo;
+        _currentCoroutine = null;
     }
 }

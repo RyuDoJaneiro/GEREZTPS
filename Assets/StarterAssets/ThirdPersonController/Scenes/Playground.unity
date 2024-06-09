@@ -1541,6 +1541,7 @@ MonoBehaviour:
   <IsSprinting>k__BackingField: 0
   <IsAiming>k__BackingField: 0
   <IsShooting>k__BackingField: 0
+  <IsReloading>k__BackingField: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -1981,6 +1982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gunHandle: {fileID: 1987569510}
   _trailRenderer: {fileID: 763341855}
+  _particleSystem: {fileID: 0}
 --- !u!4 &8002264680806281515
 Transform:
   m_ObjectHideFlags: 0
